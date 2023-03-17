@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Agile Sprints: All Users')"/>
+<body>
+<script>
+    function deleteUser(id) {
+        if (confirm("Are you sure you want to delete the user with ID " + id + "?")) {
+            fetch("/api/users/" + id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (response.status === 204) {
+                        location.reload();
+                    }
+                    throw new Error('Network response was not ok');
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+    }
+</script>
+<div th:replace="fragments/menu :: menu"/>
+<div class="container">
+    <h2 class="text-center text-white">User List</h2>
+    <form action="/api/users/all/role" method="get">
+        <label for="role" class="text-white">Filter By Role:</label>
+        <input type="text" id="role" name="role" required>
+        <button class="btn-light" type="submit">Filter Users</button>
+    </form>
+    <table class="table align-content-center" style="width:80%; margin:0 -30%;">
+        <thead>
+        <tr>
+            <th class="text-white">ID</th>
+            <th class="text-white">First Name</th>
+            <th class="text-white">Last Name</th>
+            <th class="text-white">Username</th>
+            <th class="text-white">Email</th>
+            <th class="text-white">Role</th>
+            <th class="text-white">Contacts</th>
+            <th class="text-white">Created</th>
+            <th class="text-white">Modified</th>
+            <th class="text-white">Status</th>
+            <th class="text-white">Assigned Tasks</th>
+            <th class="text-white">Completed Tasks</th>
+            <th class="text-white">Assigned Projects</th>
+            <th class="text-white">Completed Projects</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td class="text-white" th:text="${user.id}"></td>
+            <td class="text-white" th:text="${user.firstName}"></td>
+            <td class="text-white" th:text="${user.lastName}"></td>
+            <td class="text-white" th:text="${user.username}"></td>
+            <td class="text-white" th:text="${user.email}"></td>
+            <td class="text-white" th:text="${user.role}"></td>
+            <td class="text-white" th:text="${user.getContacts()}"></td>
+            <td class="text-white" th:text="${user.getCreated()}"></td>
+            <td class="text-white" th:text="${user.getModified()}"></td>
+            <td class="text-white" th:text="${user.getStatus()}"></td>
+            <td class="text-white" th:text="${user.getAssignedTasksForDeveloper()}"></td>
+            <td class="text-white" th:text="${user.getCompletedTaskResultsForDeveloper()}"></td>
+            <td class="text-white" th:text="${user.getProjectsForProductOwner()}"></td>
+            <td class="text-white" th:text="${user.getCompletedProjectResultsForProductOwner()}"></td>
+            <td>
+                <button class="btn btn-danger" th:onclick="'deleteUser(\'' + ${user.id} + '\')'">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${session.user.getRole().contains(T(com.example.project62434.enums.Role).ADMIN)}" th:remove="tag">
+        <h2 class="text-center text-white mt-5">Add/Update User</h2>
+        <form action="/api/users/all" method="POST">
+            <div class="form-group">
+                <label for="id" class="text-white">Id:</label>
+                <input type="text" class="form-control" id="id" name="id">
+            </div>
+            <div class="form-group">
+                <label for="firstName" class="text-white">First Name:</label>
+                <!-- min="1" maxlength="15" minlength="2" maxlength="15" required  minlength="2" maxlength="15" required  minlength="2" maxlength="15" required  minlength="8" required  minlength="3" required  minlength="5" pattern="^[A-Z]+([_,][A-Z]+)*$"
+                       required-->
+                <input type="text" class="form-control" id="firstName"
+                       name="firstName">
+            </div>
+            <div class="form-group">
+                <label for="lastName" class="text-white">Last Name:</label>
+                <input type="text" class="form-control" id="lastName"
+                       name="lastName">
+            </div>
+            <div class="form-group">
+                <label for="username" class="text-white">Username:</label>
+                <input type="text" class="form-control" id="username"
+                       name="username">
+            </div>
+            <div class="form-group">
+                <label for="password" class="text-white">Password:</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <div class="form-group">
+                <label for="email" class="text-white">Email:</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="roles" class="text-white">Roles:</label>
+                <input type="text" class="form-control" id="roles" name="roles">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+<div th:replace="fragments/foot :: foot"/>
+</body>
+</html>

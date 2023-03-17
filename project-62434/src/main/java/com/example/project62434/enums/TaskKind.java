@@ -1,0 +1,5 @@
+package com.example.project62434.enums;
+
+public enum TaskKind {
+    RESEARCH, DESIGN, PROTOTYPING, IMPLEMENTATION, QA, OPERATIONS, BUG_FIXING, DOCUMENTATION, OTHER
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Agile Sprints: Create a Sprint Result')"/>
+<body>
+<div th:replace="fragments/menu :: menu"/>
+<div class="container mt-5">
+  <h2 class="text-center text-white">Add a Sprint Result</h2>
+  <form action="/sprints/create-result"  method="post">
+    <div class="form-group">
+      <label class="text-white" for="sprint">The Sprint this Sprint Result is for</label>
+      <input type="sprint" class="form-control" id="sprint" name="teamVelocity"/>
+    </div>
+    <div class="form-group">
+      <label class="text-white" for="teamVelocity">Team Velocity</label>
+      <input type="text" class="form-control" id="teamVelocity" name="teamVelocity"/>
+    </div>
+    <div class="form-group">
+      <label class="text-white" for="resultsDescription">Results Description</label>
+      <input class="form-control" id="resultsDescription" name="resultsDescription"/>
+    </div>
+    <div class="form-group">
+      <label class="text-white" for="taskResults">Task Results</label>
+      <input type="text" class="form-control" id="taskResults" name="taskResults"/>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+
+<div th:replace="fragments/foot :: foot"/>
+</body>
+</html>

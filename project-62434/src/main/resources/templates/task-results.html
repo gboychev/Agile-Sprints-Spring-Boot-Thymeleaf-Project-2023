@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Agile Sprints: All Sprints')"/>
+<body>
+<div th:replace="fragments/menu :: menu"/>
+<div class="container">
+  <h2 class="text-center text-white">Task Result List</h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th class="text-white">ID</th>
+      <th class="text-white">Task</th>
+      <th class="text-white">Actual Effort</th>
+      <th class="text-white">Verified By</th>
+      <th class="text-white">Results Description</th>
+      <th class="text-white">Created</th>
+      <th class="text-white">Modified</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="result : ${results}">
+      <td class="text-white" th:text="${result.id}"></td>
+      <td class="text-white" th:text="${result.task}"></td>
+      <td class="text-white" th:text="${result.actualEffort}"></td>
+      <td class="text-white" th:text="${result.verifiedBy}"></td>
+      <td class="text-white" th:text="${result.resultsDescription}"></td>
+      <td class="text-white" th:text="${result.created}"></td>
+      <td class="text-white" th:text="${result.modified}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="text-center">
+  <a th:href="@{/tasks/create}" class="btn btn-primary">Submit Task Result</a>
+</div>
+</body>
+</html>

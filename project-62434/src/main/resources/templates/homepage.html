@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Agile Sprints: User Profile')"/>
+<body>
+<script>
+    function updateFirstName() {
+        document.getElementById("id").value = document.getElementById("idValue").innerText;
+        // update the firstName field in the hidden form with the value entered in the form
+        document.getElementById("firstName").value = document.getElementById("firstNameValue").value;
+        // trigger the submit button of the hidden form
+        document.getElementById("submitBtn").click();
+    }
+
+    function updateLastName() {
+        document.getElementById("id").value = document.getElementById("idValue").innerText;
+        // update the firstName field in the hidden form with the value entered in the form
+        document.getElementById("lastName").value = document.getElementById("lastNameValue").value;
+        // trigger the submit button of the hidden form
+        document.getElementById("submitBtn").click();
+    }
+
+    function updateEmail() {
+        document.getElementById("id").value = document.getElementById("idValue").innerText;
+        // update the firstName field in the hidden form with the value entered in the form
+        document.getElementById("email").value = document.getElementById("emailValue").value;
+        // trigger the submit button of the hidden form
+        document.getElementById("submitBtn").click();
+    }
+
+    function updateUsername() {
+        document.getElementById("id").value = document.getElementById("idValue").innerText;
+        // update the firstName field in the hidden form with the value entered in the form
+        document.getElementById("username").value = document.getElementById("usernameValue").value;
+        // trigger the submit button of the hidden form
+        document.getElementById("submitBtn").click();
+    }
+    function updateContacts() {
+        document.getElementById("id").value = document.getElementById("idValue").innerText;
+        // update the firstName field in the hidden form with the value entered in the form
+        document.getElementById("contacts").value = document.getElementById("contactsValue").value;
+        // trigger the submit button of the hidden form
+        document.getElementById("submitBtn").click();
+    }
+
+    function updatePassword() {
+        document.getElementById("id").value = document.getElementById("idValue").innerText;
+        document.getElementById("oldPassword").value = document.getElementById("oldPasswordValue").value;
+        document.getElementById("password").value = document.getElementById("passwordValue").value;
+        document.getElementById("submitBtn").click();
+    }
+</script>
+<div th:replace="fragments/menu :: menu"/>
+
+<div class="container">
+    <h2 class="text-center text-white">User Profile</h2>
+    <img th:if="${session.user.imageUrl}" th:src="${session.user.imageUrl}" alt="Profile picture" width="100" height="100"  style ="display: block;
+         margin-left: auto; margin-right: auto;">
+    <div class="user-profile d-flex flex-column justify-content-center align-items-center">
+        <!--    <img src=${user.imageUrl} alt="User Avatar" class="user-avatar mb-3"/>-->
+        <div class="user-info d-flex flex-column align-items-center">
+            <div class="user-attribute mb-3">
+
+                <span class="font-weight-bold text-white">First Name:</span>
+                <span th:text="${session.user.firstName}" class="ml-2 text-white"></span>
+                <form class="form-inline ml-3">
+                    <input type="text" id="firstNameValue" class="form-control">
+                    <button type="button" class="btn btn-info btn-sm" onclick="updateFirstName()">Edit</button>
+                </form>
+            </div>
+            <div class="user-attribute mb-3">
+                <span class="font-weight-bold text-white">Last Name:</span>
+                <span th:text="${session.user.lastName}" class="ml-2 text-white"></span>
+                <form class="form-inline ml-3">
+                    <input type="text" id="lastNameValue" class="form-control">
+                    <button type="button" class="btn btn-info btn-sm" onclick="updateLastName()">Edit</button>
+                </form>
+            </div>
+            <div class="user-attribute mb-3">
+                <span class="font-weight-bold text-white">Email:</span>
+                <span th:text="${session.user.email}" class="ml-2 text-white"></span>
+                <form class="form-inline ml-3">
+                    <input type="text" id="emailValue" class="form-control">
+                    <button type="button" class="btn btn-info btn-sm" onclick="updateEmail()">Edit</button>
+                </form>
+            </div>
+            <div class="user-attribute mb-3">
+                <span class="font-weight-bold text-white">Username:</span>
+                <span th:text="${session.user.username}" class="ml-2 text-white"></span>
+                <form class="form-inline ml-3">
+                    <input type="text" id="usernameValue" class="form-control">
+                    <button type="button" class="btn btn-info btn-sm" onclick="updateUsername()">Edit</button>
+                </form>
+            </div>
+            <div class="user-attribute mb-3">
+                <span class="font-weight-bold text-white">Old Password:</span>
+                <form class="form-inline ml-3">
+
+                    <input type="password" id="oldPasswordValue" class="form-control">
+                </form>
+                <span class="font-weight-bold text-white">New Password:</span>
+                <form class="form-inline ml-3">
+                    <input type="password" id="passwordValue" class="form-control">
+                    <button type="button" class="btn btn-info btn-sm" onclick="updatePassword()">Edit</button>
+                </form>
+            </div>
+            <div class="user-attribute mb-3">
+                <span class="font-weight-bold text-white">Roles:</span>
+                <span th:text="${session.user.getRole()}" class="ml-2 text-white"></span>
+            </div>
+            <div class="user-attribute mb-3">
+                <span class="font-weight-bold text-white">Contacts:</span>
+                <span th:text="${session.user.getContacts()}" class="ml-2 text-white"></span>
+                <form class="form-inline ml-3">
+                    <input type="text" id="contactsValue" class="form-control">
+                    <button type="button" class="btn btn-info btn-sm" onclick="updateContacts()">Edit</button>
+                </form>
+            </div>
+            <div class="user-attribute mb-3" th:if="${session.user.getRole().contains(T(com.example.project62434.enums.Role).DEVELOPER)}" th:remove="tag">
+                <span class="font-weight-bold text-white">Assigned Tasks:</span>
+                <span th:text="${session.user.getAssignedTasksForDeveloper()}" class="ml-2 text-white"></span>
+            </div>
+            <div class="user-attribute mb-3" th:if="${session.user.getRole().contains(T(com.example.project62434.enums.Role).DEVELOPER)}" th:remove="tag">
+                <span class="font-weight-bold text-white">Completed Task Results:</span>
+                <span th:text="${session.user.getCompletedTaskResultsForDeveloper()}" class="ml-2 text-white"></span>
+            </div>
+            <div class="user-attribute mb-3" th:if="${session.user.getRole().contains(T(com.example.project62434.enums.Role).PRODUCT_OWNER)}" th:remove="tag">
+                <span class="font-weight-bold text-white">Projects:</span>
+                <span th:text="${session.user.getProjectsForProductOwner()}" class="ml-2 text-white"></span>
+            </div>
+            <div class="user-attribute mb-3" th:if="${session.user.getRole().contains(T(com.example.project62434.enums.Role).PRODUCT_OWNER)}" th:remove="tag">
+                <span class="font-weight-bold text-white">Completed Project Results:</span>
+                <span th:text="${session.user.getCompletedProjectResultsForProductOwner()}" class="ml-2 text-white"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<form action="/api/users/homepage" method="POST" style="display:none">
+    <div class="form-group">
+        <label for="id" class="text-white">Id:</label>
+        <span id="idValue" th:text="${session.user.id}" class="ml-2 text-white"></span>
+        <input type="text" class="form-control" id="id"
+               name="id">
+    </div>
+    <div class="form-group">
+        <label for="firstName" class="text-white">First Name:</label>
+        <input type="text" class="form-control" id="firstName"
+               name="firstName" value="">
+    </div>
+    <div class="form-group">
+        <label for="lastName" class="text-white">Last Name:</label>
+        <input type="text" class="form-control" id="lastName"
+               name="lastName" value="">
+    </div>
+    <div class="form-group">
+        <label for="username" class="text-white">Username:</label>
+        <input type="text" class="form-control" id="username"
+               name="username" value="">
+    </div>
+    <div class="form-group">
+        <label for="oldPassword" class="text-white">Old Password:</label>
+        <input type="password" class="form-control" id="oldPassword" name="oldPassword" value="">
+    </div>
+    <div class="form-group">
+        <label for="password" class="text-white">New Password:</label>
+        <input type="password" class="form-control" id="password" name="password" value="">
+    </div>
+    <div class="form-group">
+        <label for="email" class="text-white">Email:</label>
+        <input type="email" class="form-control" id="email"
+               name="email" value="">
+    </div>
+    <div class="form-group">
+        <label for="contacts" class="text-white">Contacts:</label>
+        <input type="text" class="form-control" id="contacts"
+               name="contacts" value="">
+    </div>
+    <div class="form-group">
+        <label for="roles" class="text-white">Roles:</label>
+        <input type="text" class="form-control" id="roles"
+               name="roles" value="">
+    </div>
+    <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Agile Sprints: Create a Project')"/>
+<body>
+<script>
+  function deleteUser(id) {
+    if (confirm("Are you sure you want to delete the user with ID " + id + "?")) {
+      fetch("/api/users/" + id, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+              .then(response => {
+                if (response.status === 204) {
+                  location.reload();
+                }
+                throw new Error('Network response was not ok');
+              })
+              .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+              });
+    }
+  }
+</script>
+<div th:replace="fragments/menu :: menu"/>
+<div class="container mt-5">
+  <h2 class="text-center text-white">Add a Project</h2>
+  <form action="/projects/create"  method="post">
+    <div class="form-group">
+      <label class="text-white" for="title">Title</label>
+      <input type="text" class="form-control" id="title" name="title"/>
+    </div>
+    <div class="form-group">
+      <label class="text-white" for="startDate">Start Date</label>
+      <input type="date" class="form-control" id="startDate" name="startDate"/>
+    </div>
+    <div class="form-group">
+      <label class="text-white" for="description">Description</label>
+      <textarea class="form-control" id="description" name="description" minlength="10" maxlength="2500"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="text-white" for="owner">Owner Username</label>
+      <input type="text" class="form-control" id="owner" name="owner"/>
+    </div>
+    <div class="form-group">
+      <label class="text-white" for="developers">Developers Usernames</label>
+      <input type="text" class="form-control" id="developers" name="developers"/>
+    </div>
+    <div class="form-group">
+      <label class="text-white" for="currentSprint">Current Sprint ID</label>
+      <input type="text" class="form-control" id="currentSprint" name="currentSprint"/>
+    </div>
+    <div class="form-group">
+      <label class="text-white" for="previousSprintResults">Previous Sprint Results IDs</label>
+      <input type="text" class="form-control" id="previousSprintResults" name="previousSprintResults"/>
+    </div>
+    <div class="form-group">
+      <label class="text-white" for="tasksBacklog">Tasks Backlog IDs</label>
+      <input type="text" class="form-control" id="tasksBacklog" name="tasksBacklog"/>
+    </div>
+    <div class="form-group">
+      <label class="text-white" for="tags">Tags</label>
+      <input type="text" class="form-control" id="tags" name="tags"/>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+
+<div th:replace="fragments/foot :: foot"/>
+</body>
+</html>

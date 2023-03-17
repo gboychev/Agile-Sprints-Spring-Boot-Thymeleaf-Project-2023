@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Agile Sprints: All Tasks')"/>
+<body>
+<div th:replace="fragments/menu :: menu"/>
+<script>
+    function changeTaskStatus(id, num) {
+        fetch("/tasks/" + id + "?num=" + num, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.status === 204) {
+                    location.reload();
+                }
+                throw new Error('Network response was not ok');
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+
+    function deleteTask(id) {
+        if (confirm("Are you sure you want to delete the task with ID " + id + "?")) {
+            fetch("/tasks/" + id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (response.status === 204) {
+                        location.reload();
+                    }
+                    throw new Error('Network response was not ok');
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+    }
+
+</script>
+<div class="container">
+    <h2 class="text-center text-white">Tasks List</h2>
+    <table class="table" style="margin: 0 -25%">
+        <thead>
+        <tr>
+            <th class="text-white">ID</th>
+            <th class="text-white">Status</th>
+            <th class="text-white">Title</th>
+            <th class="text-white">Kind</th>
+            <th class="text-white">Description</th>
+            <th class="text-white">Added By</th>
+            <th class="text-white">Developers Assigned</th>
+            <th class="text-white">Sprint</th>
+            <th class="text-white">Estimated Effort</th>
+            <th class="text-white">Tags</th>
+            <th class="text-white">Created</th>
+            <th class="text-white">Modified</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${tasks}">
+            <td class="text-white" th:text="${task.id}"></td>
+            <td class="text-white" th:text="${task.status}"></td>
+            <td class="text-white" th:text="${task.title}"></td>
+            <td class="text-white" th:text="${task.kind}"></td>
+            <td class="text-white" th:text="${task.description}"></td>
+            <td class="text-white" th:text="${task.addedBy}"></td>
+            <!--            <td class="text-white" th:text="${task.developersAssigned.stream().map(d => d.toString())}"></td>-->
+            <td class="text-white">
+                <span th:each="developer : ${task.developersAssigned}" th:text="${developer.toString()}"></span>
+            </td>
+            <td class="text-white" th:text="${task.sprint}"></td>
+            <td class="text-white" th:text="${task.estimatedEffort}"></td>
+            <td class="text-white" th:text="${task.tags}"></td>
+            <td class="text-white" th:text="${task.created}"></td>
+            <td class="text-white" th:text="${task.modified}"></td>
+            <td>
+                <button class="btn btn-danger" th:onclick="'changeTaskStatus(\'' + ${task.id} + '\', \'1\')'">Mark
+                    PLANNED
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-danger" th:onclick="'changeTaskStatus(\'' + ${task.id} + '\', \'2\')'">Mark
+                    ACTIVE
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-danger" th:onclick="'changeTaskStatus(\'' + ${task.id} + '\', \'3\')'">Mark
+                    COMPLETED
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="text-center" style="margin-bottom: 5px">
+    <a th:href="@{/tasks/create}" class="btn btn-primary">Create Task</a>
+</div>
+
+<div class="text-center" style="margin-bottom: 5px">
+    <a th:href="@{/tasks/results}" class="btn btn-primary">View Task Results</a>
+</div>
+
+<div class="text-center" style="margin-bottom: 5px">
+    <a th:href="@{/tasks/create-result}" class="btn btn-primary">Submit Task Result</a>
+</div>
+
+<label for="task-id">Task ID:</label>
+<input type="number" id="task-id" name="taskId" />
+<button type="button" onclick="deleteTask(document.getElementById('task-id').value)">Delete Task</button>
+
+</body>
+</html>

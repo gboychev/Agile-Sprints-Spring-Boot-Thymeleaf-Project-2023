@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Agile Sprints: All Projects')"/>
+<body>
+<div th:replace="fragments/menu :: menu"/>
+<div class="container">
+  <h2 class="text-center text-white">Project List</h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th class="text-white">ID</th>
+      <th class="text-white">Title</th>
+      <th class="text-white">Start Date</th>
+      <th class="text-white">Description</th>
+      <th class="text-white">Owner</th>
+      <th class="text-white">Developers</th>
+      <th class="text-white">Current Sprint</th>
+      <th class="text-white">Previous Sprint Results</th>
+      <th class="text-white">Tasks Backlog</th>
+      <th class="text-white">Tags</th>
+      <th class="text-white">Created</th>
+      <th class="text-white">Modified</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="project : ${projects}">
+      <td class="text-white" th:text="${project.id}"></td>
+      <td class="text-white" th:text="${project.title}"></td>
+      <td class="text-white" th:text="${project.startDate}"></td>
+      <td class="text-white" th:text="${project.description}"></td>
+      <td class="text-white" th:text="${project.owner}"></td>
+      <td class="text-white" th:text="${project.developers}"></td>
+      <td class="text-white" th:text="${project.currentSprint}"></td>
+      <td class="text-white" th:text="${project.previousSprintResults}"></td>
+      <td class="text-white" th:text="${project.tasksBacklog}"></td>
+      <td class="text-white" th:text="${project.tags}"></td>
+      <td class="text-white" th:text="${project.created}"></td>
+      <td class="text-white" th:text="${project.modified}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="text-center" style="margin-bottom: 5px">
+  <a th:href="@{/projects/create}" class="btn btn-primary">Create Project</a>
+</div>
+<div class="text-center" style="margin-bottom: 5px">
+  <a th:href="@{/projects/results}" class="btn btn-primary">View Project Results</a>
+</div>
+
+<div class="text-center" style="margin-bottom: 5px">
+  <a th:href="@{/projects/results/create}" class="btn btn-primary">Submit Project Result</a>
+</div>
+
+</body>
+</html>

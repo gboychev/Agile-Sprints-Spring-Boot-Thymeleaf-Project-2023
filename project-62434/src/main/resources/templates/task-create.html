@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Agile Sprints: Create a Task')"/>
+<body>
+<div th:replace="fragments/menu :: menu"/>
+<div class="container mt-5">
+    <h2 class="text-center text-white">Add a Task</h2>
+    <form action="/tasks/create" method="post">
+        <div class="form-group">
+            <label class="text-white" for="status">Status</label>
+            <input type="text" class="form-control" id="status" name="status"/>
+        </div>
+        <div class="form-group">
+            <label class="text-white" for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title"/>
+        </div>
+        <div class="form-group">
+            <label class="text-white" for="kind">Task Kind</label>
+            <textarea class="form-control" id="kind" name="kind"></textarea>
+        </div>
+        <div class="form-group">
+            <label class="text-white" for="description">Description</label>
+            <input type="text" class="form-control" id="description" name="description"/>
+        </div>
+        <div class="form-group">
+            <label class="text-white" for="addedBy">Added By(User or Product Owner Username)</label>
+            <input type="text" class="form-control" id="addedBy" name="addedBy"/>
+        </div>
+        <div class="form-group">
+            <label class="text-white" for="developers">Developers</label>
+            <input type="text" class="form-control" id="developers" name="developers"/>
+        </div>
+        <div class="form-group">
+            <label class="text-white" for="sprint">Sprint ID</label>
+            <input type="text" class="form-control" id="sprint" name="sprint"/>
+        </div>
+        <div class="form-group">
+            <label class="text-white" for="estimatedEffort">Estimated Effort</label>
+            <input type="text" class="form-control" id="estimatedEffort" name="estimatedEffort"/>
+        </div>
+        <div class="form-group">
+            <label class="text-white" for="tags">Tags</label>
+            <input type="text" class="form-control" id="tags" name="tags"/>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+<div th:replace="fragments/foot :: foot"/>
+</body>
+</html>

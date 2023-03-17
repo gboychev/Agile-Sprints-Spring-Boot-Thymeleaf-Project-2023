@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Agile Sprints: All Sprints')"/>
+<body>
+<div th:replace="fragments/menu :: menu"/>
+<div class="container">
+  <h2 class="text-center text-white">Sprints List</h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th class="text-white">ID</th>
+      <th class="text-white">Owner</th>
+      <th class="text-white">Developers</th>
+      <th class="text-white">Tasks</th>
+      <th class="text-white">Completed Task Results</th>
+      <th class="text-white">Created</th>
+      <th class="text-white">Modified</th>
+      <th class="text-white">Duration</th>
+      <th class="text-white">Start Date</th>
+      <th class="text-white">End Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="sprint : ${sprints}">
+      <td class="text-white" th:text="${sprint.id}"></td>
+      <td class="text-white" th:text="${sprint.owner.username}"></td>
+      <td class="text-white" th:text="${sprint.developers}"></td>
+      <td class="text-white" th:text="${sprint.tasks}"></td>
+      <td class="text-white" th:text="${sprint.completedTaskResults}"></td>
+      <td class="text-white" th:text="${sprint.created}"></td>
+      <td class="text-white" th:text="${sprint.modified}"></td>
+      <td class="text-white" th:text="${sprint.duration}"></td>
+      <td class="text-white" th:text="${sprint.startDate}"></td>
+      <td class="text-white" th:text="${sprint.endDate}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="text-center" style="margin-bottom: 5px">
+  <a th:href="@{/sprints/create}" class="btn btn-primary">Create Sprint</a>
+</div>
+<div class="text-center" style="margin-bottom: 5px">
+  <a th:href="@{/sprints/results}" class="btn btn-primary">View Sprint Results</a>
+</div>
+
+<div class="text-center" style="margin-bottom: 5px">
+  <a th:href="@{/sprints/results/create}" class="btn btn-primary">Submit Sprint Result</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!--<link rel="stylesheet" type="text/css" th:href="@{/../../static/css/menu-style.css}">-->
+<div th:fragment="menu" xmlns:th="http://www.thymeleaf.org">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+        <a class="navbar-brand" th:href="@{/}"><img th:src="@{/img/Sofia_University_Logo.png}" class="logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto col-12 justify-content-between">
+                <li class="nav-item" th:classappend="${#request.getServletPath() == '/api/users/all'}? 'active'">
+                    <a class="nav-link" th:href="@{/api/users/all}">All Users</a>
+                </li>
+<!--                <li class="nav-item" th:classappend="${#request.getServletPath() == '/brands/add'}? 'active'">-->
+<!--                    <a class="nav-link" th:href="@{/}">Add Brand</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item" th:classappend="${#request.getServletPath() == '/brands/model/add'}? 'active'">-->
+<!--                    <a class="nav-link" th:href="@{/}">Add Model</a>-->
+<!--                </li>-->
+                <li class="nav-item" th:classappend="${#request.getServletPath() == '/api/users/homepage'}? 'active'">
+                    <a class="nav-link" th:href="@{/api/users/homepage}">Personal Profile</a>
+                </li>
+                <li class="nav-item" th:classappend="${#request.getServletPath() == '/projects/all'}? 'active'">
+                    <a class="nav-link" th:href="@{/projects/all}">Projects</a>
+                </li>
+                <li class="nav-item" th:classappend="${#request.getServletPath() == '/sprints/all'}? 'active'">
+                    <a class="nav-link" th:href="@{/sprints/all}">Sprints</a>
+                </li>
+                <li class="nav-item" th:classappend="${#request.getServletPath() == '/tasks/all'}? 'active'">
+                    <a class="nav-link" th:href="@{/tasks/all}">Tasks</a>
+                </li>
+<!--                <li class="nav-item dropdown-toggle">-->
+<!--                    <a class="nav-link dropdown" th:href="@{/tasks/all}" id="navbarDropdown" role="button"-->
+<!--                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                        Tasks-->
+<!--                    </a>-->
+<!--                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                        <a class="dropdown-item" th:href="@{/tasks/all}">Task Result</a>-->
+<!--&lt;!&ndash;                        <a class="dropdown-item" th:href="@{/}">Another action</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="dropdown-divider"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a class="dropdown-item" th:href="@{/}">Something else here</a>&ndash;&gt;-->
+<!--                    </div>-->
+<!--                </li>-->
+                <li th:if="${session.user}" class="nav-item" th:classappend="${#request.getServletPath() == '/auth/logaout'}? 'active'">
+                   <div class="form-inline my-2 my-lg-0 border px-3">
+                        <div class="logged-user" th:text="|Wellcome, ${session.user.firstName}|" />
+                        <a class="nav-link" th:href="@{/api/logout}">Logout</a>
+                   </div>
+                </li>
+<!--                <li th:unless="${session.user}" class="nav-item" th:classappend="${#request.getServletPath() == '/auth/register'}? 'active'">-->
+<!--                    <a class="nav-link" th:href="@{/api/register}">Register</a>-->
+<!--                </li>-->
+                <li th:unless="${session.user}" class="nav-item" th:classappend="${#request.getServletPath() == '/auth/login'}? 'active'">
+                    <a class="nav-link" th:href="@{/api/login}">Login</a>
+                </li>
+<!--                <li>-->
+<!--                    <form class="form-inline my-2 my-lg-0">-->
+<!--                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+<!--                    </form>-->
+<!--                </li>-->
+            </ul>
+        </div>
+    </nav>
+</div>
